@@ -3,80 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>GameCraft AI - Game Studio</title>
+  <title>Game Engine Pro - Zar King</title>
   <!-- Google Sign-In SDK -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     
-    /* Dark Blue Premium Theme */
-    html, body { height: 100%; width: 100%; background-color: #060911; color: #e2e8f0; overflow: hidden; }
+    /* Clean Minimalist Pure Black Theme */
+    html, body { height: 100%; width: 100%; background-color: #000000; color: #ffffff; overflow: hidden; }
     body { display: flex; flex-direction: column; }
+
+    /* Glowing Accents for Buttons & Titles */
+    .glow-text { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.8); }
+    .glow-blue-text { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.6); }
 
     /* 1. Auth Screen */
     #authScreen {
-      position: fixed; inset: 0; background: radial-gradient(circle at center, #0f172a 0%, #060911 100%); z-index: 1000;
+      position: fixed; inset: 0; 
+      background: #000000; 
+      z-index: 1000;
       display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
     }
-    .brand-logo { font-size: 28px; margin-bottom: 4px; color: #ffffff; font-weight: 800; letter-spacing: 0.5px; text-shadow: 0 0 15px rgba(37, 99, 235, 0.4); }
-    .brand-credit { font-size: 11px; color: #94a3b8; margin-bottom: 28px; text-transform: uppercase; letter-spacing: 1.5px; text-align: center; line-height: 1.4; }
+    .brand-logo { font-size: 32px; margin-bottom: 4px; font-weight: 900; letter-spacing: 1px; }
+    .brand-credit { font-size: 11px; color: #71717a; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; text-align: center; line-height: 1.5; font-weight: 700; }
     
     .auth-card { 
-      width: 100%; max-width: 320px; background: #0f172a; padding: 28px 24px; 
-      border-radius: 14px; border: 1px solid #1e293b; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(37, 99, 235, 0.1);
+      width: 100%; max-width: 320px; 
+      background: #09090b; 
+      padding: 28px 24px; 
+      border-radius: 16px; 
+      border: 1px solid #27272a; 
+      box-shadow: 0 20px 50px rgba(0,0,0,1);
       display: flex; flex-direction: column; align-items: center; gap: 16px;
     }
-    .auth-title { font-size: 14px; font-weight: 600; color: #f8fafc; text-align: center; letter-spacing: 0.5px; }
+    .auth-title { font-size: 14px; font-weight: 700; color: #f4f4f5; text-align: center; letter-spacing: 0.5px; }
     
     .google-btn-container { width: 100%; display: flex; justify-content: center; }
 
-    .divider { display: flex; align-items: center; width: 100%; color: #475569; font-size: 11px; margin: 4px 0; }
-    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
-    .divider span { padding: 0 8px; }
+    .divider { display: flex; align-items: center; width: 100%; color: #52525b; font-size: 11px; margin: 4px 0; font-weight: 600; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #27272a; }
+    .divider span { padding: 0 10px; }
 
+    /* Glowing Guest Button */
     .btn-guest { 
-      width: 100%; padding: 11px; background: #1e293b; border: 1px solid #334155; 
-      border-radius: 8px; color: #cbd5e1; font-weight: 600; font-size: 12px; cursor: pointer; 
+      width: 100%; padding: 12px; 
+      background: #18181b; 
+      border: 1px solid #3f3f46; 
+      border-radius: 8px; color: #ffffff; font-weight: 700; font-size: 12px; cursor: pointer; 
       transition: all 0.2s;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
     }
-    .btn-guest:active { background: #2563eb; color: #ffffff; border-color: #3b82f6; }
+    .btn-guest:active { background: #2563eb; color: #ffffff; border-color: #60a5fa; box-shadow: 0 0 25px rgba(37, 99, 235, 0.8); }
 
     /* 2. Main Studio Interface */
     #mainApp { display: none; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden; }
 
-    /* Header Layout */
     header { 
-      height: 54px; min-height: 54px; background: #0b1120; border-bottom: 1px solid #1e293b; 
+      height: 54px; min-height: 54px; 
+      background: #09090b; 
+      border-bottom: 1px solid #27272a; 
       display: flex; align-items: center; justify-content: space-between; padding: 0 16px; 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
     
     .header-left { display: flex; flex-direction: column; }
-    .studio-title { font-size: 14px; font-weight: 700; color: #38bdf8; letter-spacing: 0.5px; }
+    .studio-title { font-size: 14px; font-weight: 800; }
 
-    .header-center { font-size: 12px; font-weight: 700; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; }
+    .header-center { font-size: 12px; font-weight: 800; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; }
 
     .header-right { display: flex; flex-direction: column; align-items: flex-end; }
-    .engine-title { font-size: 12px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }
-    .by-credit { font-size: 9px; color: #64748b; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+    .engine-title { font-size: 12px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; }
+    .by-credit { font-size: 9px; color: #a1a1aa; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-top: 2px; }
 
     /* Viewport Frame */
-    .viewport { flex: 1; background: #020617; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .viewport { flex: 1; background: #000000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     iframe { width: 100%; height: 100%; border: none; }
     
-    .empty-state { position: absolute; text-align: center; color: #475569; padding: 20px; }
-    .empty-state-text { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+    .empty-state { position: absolute; text-align: center; color: #3f3f46; padding: 20px; }
+    .empty-state-text { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
 
     /* Output Console */
-    .ai-chat-box { height: 75px; min-height: 75px; background: #070c18; border-top: 1px solid #1e293b; padding: 10px 14px; overflow-y: auto; font-size: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .ai-chat-box { 
+      height: 75px; min-height: 75px; 
+      background: #09090b; 
+      border-top: 1px solid #18181b; 
+      padding: 10px 14px; overflow-y: auto; font-size: 12px; display: flex; flex-direction: column; gap: 6px; 
+    }
     .msg { padding: 8px 12px; border-radius: 6px; max-width: 90%; line-height: 1.3; }
-    .msg.ai { background: #0f172a; color: #94a3b8; border: 1px solid #1e293b; align-self: flex-start; }
-    .msg.user { background: #2563eb; color: #ffffff; font-weight: 600; align-self: flex-end; }
+    .msg.ai { background: #18181b; color: #a1a1aa; border: 1px solid #27272a; align-self: flex-start; }
+    .msg.user { 
+      background: #2563eb; color: #ffffff; font-weight: 700; align-self: flex-end; 
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.5); 
+    }
 
     /* Input Control Bar */
     .bottom-bar { 
-      background: #0b1120; 
-      border-top: 1px solid #1e293b; 
+      background: #09090b; 
+      border-top: 1px solid #27272a; 
       padding: 10px 14px; 
       padding-bottom: max(10px, env(safe-area-inset-bottom)); 
       display: flex; 
@@ -84,12 +106,33 @@
       align-items: center; 
       width: 100%;
     }
-    .mic-btn { width: 42px; height: 42px; min-width: 42px; background: #0f172a; border: 1px solid #1e293b; color: #38bdf8; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
-    .mic-btn.recording { background: #ef4444; color: #ffffff; border-color: #ef4444; }
-    .prompt-input { flex: 1; min-width: 0; background: #060911; border: 1px solid #1e293b; border-radius: 8px; padding: 12px 14px; color: #ffffff; font-size: 13px; outline: none; }
-    .prompt-input:focus { border-color: #2563eb; }
-    .send-btn { width: 42px; height: 42px; min-width: 42px; background: #2563eb; border: none; color: #ffffff; font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; }
-    .send-btn:active { background: #1d4ed8; }
+    
+    /* Glowing Mic Button */
+    .mic-btn { 
+      width: 42px; height: 42px; min-width: 42px; 
+      background: #18181b; 
+      border: 1px solid #3f3f46; 
+      color: #38bdf8; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; 
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    .mic-btn.recording { background: #ef4444; color: #ffffff; border-color: #ef4444; box-shadow: 0 0 18px rgba(239, 68, 68, 0.8); }
+    
+    .prompt-input { 
+      flex: 1; min-width: 0; 
+      background: #000000; 
+      border: 1px solid #27272a; 
+      border-radius: 8px; padding: 12px 14px; color: #ffffff; font-size: 13px; outline: none; 
+    }
+    .prompt-input:focus { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+    
+    /* Glowing Send Button */
+    .send-btn { 
+      width: 42px; height: 42px; min-width: 42px; 
+      background: #2563eb; 
+      border: none; color: #ffffff; font-weight: 800; border-radius: 8px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; 
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+    }
+    .send-btn:active { transform: scale(0.96); box-shadow: 0 0 25px rgba(37, 99, 235, 0.9); }
 
     @media screen and (orientation: landscape) and (max-height: 500px) {
       header { height: 44px; min-height: 44px; }
@@ -102,9 +145,9 @@
 </head>
 <body>
 
-  <!-- 1. Sign-In Screen -->
+  <!-- 1. Authentication Screen -->
   <div id="authScreen">
-    <div class="brand-logo">GameCraft AI</div>
+    <div class="brand-logo glow-text">GameCraft AI</div>
     <div class="brand-credit">BY ZAR KING<br>(ZARBAAN)</div>
     <div class="auth-card">
       <div class="auth-title">Sign in to Studio</div>
@@ -134,7 +177,7 @@
   <div id="mainApp">
     <header>
       <div class="header-left">
-        <span class="studio-title">Game Studio</span>
+        <span class="studio-title glow-blue-text">Game Studio</span>
       </div>
 
       <div class="header-center">
@@ -155,7 +198,7 @@
     </div>
 
     <div class="ai-chat-box" id="chatBox">
-      <div class="msg ai" id="welcomeMsg">Pipeline Ready. Type or speak game prompt below.</div>
+      <div class="msg ai" id="welcomeMsg">Studio Ready. Type or speak game prompt below.</div>
     </div>
 
     <div class="bottom-bar">
@@ -166,17 +209,6 @@
   </div>
 
   <script>
-    function getApiKey() {
-      let key = localStorage.getItem("GEMINI_API_KEY");
-      if (!key) {
-        key = prompt("Enter your Gemini API Key:");
-        if (key && key.trim() !== "") {
-          localStorage.setItem("GEMINI_API_KEY", key.trim());
-        }
-      }
-      return key;
-    }
-
     let isRecording = false;
     let recognition;
 
@@ -186,7 +218,7 @@
         const userName = responsePayload.name || "Creator";
         enterStudio(userName);
       } catch (e) {
-        alert("Google Cloud Client ID is missing or invalid. Please use 'Continue as Guest' or configure Google OAuth Client ID.");
+        enterStudio("Guest");
       }
     }
 
@@ -202,7 +234,7 @@
     function enterStudio(name) {
       document.getElementById('authScreen').style.display = 'none';
       document.getElementById('mainApp').style.display = 'flex';
-      document.getElementById('welcomeMsg').innerText = `Welcome ${name}! Pipeline Ready. Type or speak game prompt below.`;
+      document.getElementById('welcomeMsg').innerText = `Welcome ${name}! Studio Engine Ready. Type or speak game prompt below.`;
     }
 
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -236,52 +268,27 @@
       const text = input.value.trim();
       if (!text) return;
 
-      const apiKey = getApiKey();
-      if (!apiKey) {
-        alert("API Key is required to compile games.");
-        return;
-      }
-
       addChatMessage(text, 'user');
       input.value = '';
 
       const loadingMsg = addChatMessage("Compiling game engine... Please wait.", 'ai');
 
-      const systemInstruction = `You are a professional HTML5 game developer.
-      Generate a complete single-file HTML5/CSS/JavaScript mini-game.
-      Requirements:
-      1. Must work smoothly on mobile touchscreens with touch controls.
-      2. Responsive layout for both portrait and landscape modes.
-      3. Return ONLY pure code starting with <!DOCTYPE html> and ending with </html> without markdown blocks.`;
+      const systemPrompt = `Create a complete single-file HTML5 playable game for: ${text}. Include HTML, CSS, and JavaScript in one file. Do not use markdown blocks.`;
 
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: systemInstruction + "\nRequest: " + text }] }]
-          })
-        });
+        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(systemPrompt)}?model=openai`);
+        
+        if (!response.ok) throw new Error("Compilation Error");
 
-        if (!response.ok) {
-          throw new Error(`API Error Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        let rawHtml = data.candidates[0].content.parts[0].text;
+        let rawHtml = await response.text();
         rawHtml = rawHtml.replace(/```html/g, '').replace(/```/g, '').trim();
 
         document.getElementById('emptyState').style.display = 'none';
         document.getElementById('gameFrame').srcdoc = rawHtml;
 
         loadingMsg.innerText = "Game loaded in viewport successfully!";
-
       } catch (err) {
-        loadingMsg.innerText = "Error compiling code. API Key may be invalid or expired.";
-        if (confirm("API Error occurred. Would you like to update your API Key?")) {
-          localStorage.removeItem("GEMINI_API_KEY");
-          getApiKey();
-        }
+        loadingMsg.innerText = "Error compiling game. Please try again.";
         console.error(err);
       }
     }
